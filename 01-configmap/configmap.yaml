@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: restart-demos
+data:
+  APP_COLOR: "blue"
+  APP_VERSION: "v1"
+  config.json: |
+    {
+      "color": "blue",
+      "feature_dark_mode": false,
+      "log_level": "info"
+    }

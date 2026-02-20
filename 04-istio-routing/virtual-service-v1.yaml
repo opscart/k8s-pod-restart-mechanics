@@ -1,0 +1,15 @@
+# 100% traffic to v1 — baseline
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: echo
+  namespace: restart-demos
+spec:
+  hosts:
+  - echo
+  http:
+  - route:
+    - destination:
+        host: echo
+        subset: v1
+      weight: 100

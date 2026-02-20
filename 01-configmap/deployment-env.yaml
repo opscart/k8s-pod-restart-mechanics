@@ -1,0 +1,38 @@
+# ConfigMap consumed as ENV VAR — requires restart to pick up changes
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-demo-env
+  namespace: restart-demos
+  labels:
+    scenario: configmap-env
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-demo-env
+  template:
+    metadata:
+      labels:
+        app: config-demo-env
+    spec:
+      containers:
+      - name: app
+        image: busybox:1.36
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          echo "Starting with APP_COLOR=$APP_COLOR"
+          while true; do
+            echo "[$(date)] APP_COLOR=$APP_COLOR"
+            sleep 10
+          done
+        env:
+        - name: APP_COLOR
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: APP_COLOR
+        resources:
+          requests: {cpu: "50m", memory: "32Mi"}
+          limits:   {cpu: "100m", memory: "64Mi"}

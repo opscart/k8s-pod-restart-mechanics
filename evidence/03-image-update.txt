@@ -1,0 +1,1 @@
+# Run 'make demo-image-update' to capture evidence

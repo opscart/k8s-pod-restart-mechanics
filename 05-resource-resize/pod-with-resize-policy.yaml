@@ -1,0 +1,25 @@
+# Requires K8s 1.35+ (InPlacePodVerticalScaling GA)
+# Run: scripts/version-check.sh before this demo
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resize-demo
+  namespace: restart-demos
+  labels:
+    scenario: inplace-resize
+spec:
+  containers:
+  - name: app
+    image: nginx:1.27
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "200m"
+        memory: "256Mi"
+    resizePolicy:
+    - resourceName: cpu
+      restartPolicy: NotRequired      # CPU change = no process restart
+    - resourceName: memory
+      restartPolicy: RestartContainer # Memory change = container restart

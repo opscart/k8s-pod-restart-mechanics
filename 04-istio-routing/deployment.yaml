@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-v1
+  namespace: restart-demos
+  labels:
+    app: echo
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: echo
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: echo
+        version: v1
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - name: echo
+        image: hashicorp/http-echo:0.2.3
+        args: ["-text=response-from-v1"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: "50m", memory: "32Mi"}
+          limits:   {cpu: "100m", memory: "64Mi"}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-v2
+  namespace: restart-demos
+  labels:
+    app: echo
+    version: v2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: echo
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: echo
+        version: v2
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - name: echo
+        image: hashicorp/http-echo:0.2.3
+        args: ["-text=response-from-v2"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: "50m", memory: "32Mi"}
+          limits:   {cpu: "100m", memory: "64Mi"}

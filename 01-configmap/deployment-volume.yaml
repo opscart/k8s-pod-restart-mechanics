@@ -1,0 +1,47 @@
+# ConfigMap consumed as VOLUME MOUNT — app can hot-reload without restart
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-demo-volume
+  namespace: restart-demos
+  labels:
+    scenario: configmap-volume
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-demo-volume
+  template:
+    metadata:
+      labels:
+        app: config-demo-volume
+    spec:
+      containers:
+      - name: app
+        image: busybox:1.36
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          echo "Starting. Watching /etc/config for changes..."
+          LAST=""
+          while true; do
+            CURRENT=$(cat /etc/config/APP_COLOR 2>/dev/null || echo "unknown")
+            if [ "$CURRENT" != "$LAST" ]; then
+              echo "[$(date)] CONFIG RELOADED: APP_COLOR=$CURRENT"
+              LAST=$CURRENT
+            fi
+            sleep 2
+          done
+        volumeMounts:
+        - name: config
+          mountPath: /etc/config
+        resources:
+          requests: {cpu: "50m", memory: "32Mi"}
+          limits:   {cpu: "100m", memory: "64Mi"}
+      volumes:
+      - name: config
+        configMap:
+          name: app-config
+          items:
+          - key: APP_COLOR
+            path: APP_COLOR

@@ -1,0 +1,19 @@
+# 80/20 canary split — applied to prove NO pod restart occurs
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: echo
+  namespace: restart-demos
+spec:
+  hosts:
+  - echo
+  http:
+  - route:
+    - destination:
+        host: echo
+        subset: v1
+      weight: 80
+    - destination:
+        host: echo
+        subset: v2
+      weight: 20

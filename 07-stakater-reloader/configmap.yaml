@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: reloader-demo-config
+  namespace: restart-demos
+data:
+  APP_MESSAGE: "Hello from OpsCart v1"
+  LOG_LEVEL: "info"
