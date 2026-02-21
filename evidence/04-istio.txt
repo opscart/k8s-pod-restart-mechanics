@@ -1,1 +1,0 @@
-# Run 'make demo-istio' to capture evidence

@@ -1,1 +1,13 @@
-# Run 'make demo-configmap' to capture evidence
+=== ENV POD (frozen) ===
+APP_COLOR=blue
+
+=== VOL POD symlink structure ===
+total 12
+drwxrwxrwx    3 root     root          4096 Feb 20 17:53 .
+drwxr-xr-x    1 root     root          4096 Feb 20 17:53 ..
+drwxr-xr-x    2 root     root          4096 Feb 20 17:53 ..2026_02_20_17_53_42.127976121
+lrwxrwxrwx    1 root     root            31 Feb 20 17:53 ..data -> ..2026_02_20_17_53_42.127976121
+lrwxrwxrwx    1 root     root            16 Feb 20 17:53 APP_COLOR -> ..data/APP_COLOR
+
+=== VOL POD file content ===
+blue

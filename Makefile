@@ -31,7 +31,7 @@ demo-image: setup
 	@echo "=== Scenario 03: Image Update ==="
 	bash 03-image-update/demo.sh 2>&1 | tee evidence/03-image-update.txt
 
-demo-istio:
+demo-istio: setup
 	@echo "=== Scenario 04: Istio Routing ==="
 	@kubectl get ns istio-system > /dev/null 2>&1 || \
 		(echo "ERROR: Istio not installed. Run: minikube addons enable istio" && exit 1)

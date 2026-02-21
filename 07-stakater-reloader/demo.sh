@@ -8,7 +8,7 @@ echo " Scenario 07: Stakater Reloader Pattern"
 echo "=============================================="
 
 # Check reloader is installed
-kubectl get deployment reloader -n reloader > /dev/null 2>&1 || {
+kubectl get deployment reloader-reloader -n reloader > /dev/null 2>&1 || {
   echo "Reloader not installed. Run: bash 07-stakater-reloader/install-reloader.sh"
   exit 1
 }

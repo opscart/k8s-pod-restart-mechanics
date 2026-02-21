@@ -14,9 +14,9 @@ kubectl apply -f 01-configmap/deployment-env.yaml
 kubectl apply -f 01-configmap/deployment-volume.yaml
 
 echo "Waiting for pods..."
-kubectl wait --for=condition=ready pod -l scenario=configmap-env \
+kubectl wait --for=condition=ready pod -l app=config-demo-env \
   -n $NS --timeout=60s
-kubectl wait --for=condition=ready pod -l scenario=configmap-volume \
+kubectl wait --for=condition=ready pod -l app=config-demo-volume \
   -n $NS --timeout=60s
 
 ENV_POD=$(kubectl get pod -l app=config-demo-env -n $NS \
