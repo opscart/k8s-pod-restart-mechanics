@@ -1,0 +1,38 @@
+# Secret consumed as VOLUME MOUNT — same symlink swap as ConfigMap
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secret-demo-volume
+  namespace: restart-demos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: secret-demo-volume
+  template:
+    metadata:
+      labels:
+        app: secret-demo-volume
+    spec:
+      containers:
+      - name: app
+        image: busybox:1.36
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          echo "Started. Watching /etc/secrets/"
+          while true; do
+            echo "[$(date)] DB_PASSWORD=$(cat /etc/secrets/DB_PASSWORD 2>/dev/null)"
+            sleep 15
+          done
+        volumeMounts:
+        - name: secret
+          mountPath: /etc/secrets
+          readOnly: true
+        resources:
+          requests: {cpu: "50m", memory: "32Mi"}
+          limits:   {cpu: "100m", memory: "64Mi"}
+      volumes:
+      - name: secret
+        secret:
+          secretName: app-secret

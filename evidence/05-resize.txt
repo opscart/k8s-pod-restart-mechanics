@@ -1,1 +1,0 @@
-# Run 'make demo-resize' to capture evidence
