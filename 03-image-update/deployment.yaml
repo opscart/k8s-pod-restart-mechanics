@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-demo
+  namespace: restart-demos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-demo
+  template:
+    metadata:
+      labels:
+        app: image-demo
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.25
+        ports:
+        - containerPort: 80
+        resources:
+          requests: {cpu: "50m", memory: "32Mi"}
+          limits:   {cpu: "100m", memory: "64Mi"}
