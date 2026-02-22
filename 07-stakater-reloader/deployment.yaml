@@ -1,13 +1,12 @@
-# Reloader watches this deployment because of the annotation
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: reloader-demo
   namespace: restart-demos
   annotations:
-    reloader.stakater.com/auto: "true"   # <-- key annotation
+    reloader.stakater.com/auto: "true"
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: reloader-demo

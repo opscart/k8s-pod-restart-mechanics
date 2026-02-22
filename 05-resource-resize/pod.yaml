@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resize-demo
+  namespace: restart-demos
+  labels:
+    app: resize-demo
+spec:
+  containers:
+  - name: app
+    image: nginx:1.27
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "200m"
+        memory: "256Mi"
+    resizePolicy:
+    - resourceName: cpu
+      restartPolicy: NotRequired      # CPU resize = no restart
+    - resourceName: memory
+      restartPolicy: RestartContainer # Memory resize = container restart

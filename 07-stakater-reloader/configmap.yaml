@@ -4,5 +4,5 @@ metadata:
   name: reloader-demo-config
   namespace: restart-demos
 data:
-  APP_MESSAGE: "Hello from OpsCart v1"
+  APP_MESSAGE: "Hello from OpsCart"
   LOG_LEVEL: "info"
